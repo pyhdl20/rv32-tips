@@ -1,0 +1,10 @@
+
+search risc v trap handler
+
+https://www.reddit.com/r/RISCV/comments/dureua/riscv_exception_handler_trap/
+  1. The core jumps to the address stored in the mtvec CSR register. Details you can find here:
+      https://riscv.org/specifications/privileged-isa/
+  2. pk at 
+      https://github.com/riscv/riscv-pk
+
+
