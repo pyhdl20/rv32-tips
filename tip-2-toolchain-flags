@@ -1,0 +1,14 @@
+
+search  picorv32 trap handling 
+
+https://stackoverflow.com/questions/61867436/picorv32-risc-v-implementation-in-vivado-2018-2
+
+
+If you are trying to build code for a 32-bit RISC-V rv32i core using a 64-bit compiler 
+(as most distributions provide) then you need to add  -mabi=ilp32 -march=rv32i  to put 
+it into rv32i mode.
+
+If you are using a "linux" variant compiler to create a bare metal binary, you need to 
+remove the build ID (which breaks the flat binary output) by using  ,--build-id=none  after  -Wl .
+
+

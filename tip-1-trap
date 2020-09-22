@@ -8,3 +8,11 @@ https://www.reddit.com/r/RISCV/comments/dureua/riscv_exception_handler_trap/
       https://github.com/riscv/riscv-pk
 
 
+search trap in picorv32 issues on github
+
+https://github.com/cliffordwolf/picorv32/issues/72
+LH instruction causes MISALIGNED HALFWORD error
+
+  disable CATCH_MISALIGN
+
+
