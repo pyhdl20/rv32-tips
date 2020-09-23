@@ -1,0 +1,12 @@
+
+search quartus turn off optimization
+
+https://community.intel.com/t5/Intel-Quartus-Prime-Software/How-to-disable-quartusII-synthesis-optimization/td-p/137950
+
+try set .qsf: 
+
+set_global_assignment -name PRE_MAPPING_RESYNTHESIS OFF
+set_global_assignment -name REMOVE_REDUNDANT_LOGIC_CELLS OFF
+set_global_assignment -name REMOVE_DUPLICATE_REGISTERS OFF
+
+
