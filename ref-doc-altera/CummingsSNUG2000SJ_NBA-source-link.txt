@@ -1,0 +1,8 @@
+
+
+search verilog sequential block assign twice
+
+
+http://www.sunburst-design.com/papers/CummingsSNUG2000SJ_NBA.pdf
+
+
