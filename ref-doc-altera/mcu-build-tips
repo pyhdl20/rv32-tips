@@ -1,0 +1,210 @@
+
+
+content
+    cryptoauthlib configuration
+    cryptoauthtools for greengrass hsi
+    pip uninstall cryptoauthlib
+    pip install cryptoauthlib
+    cryptoauthlib install
+    cryptoauthlib build_ext
+    cryptoauthlib .so
+    examples
+
+
+
+https://github.com/MicrochipTech/cryptoauthlib/wiki/Configuration
+ For example to configure:
+
+    cd cryptoauthlib
+    mkdir build
+    cd build
+    cmake -DATCA_ATECC608A_SUPPORT=ON -DATCA_TFLEX_SUPPORT=on -DATCA_OPENSSL=ON -DATCA_HAL_KIT_HID=ON ../
+
+ To build:
+
+    cd cryptoauthlib/build
+    cmake --build .
+
+ CMake Configuration Options
+  Global Options
+    BUILD_TESTS (default off) - Create the Test Application
+    ATCA_PRINTF (default off) - Enable Debug print statements in library
+    ATCA_BUILD_SHARED_LIBS (default on) - Builds cryptoauthlib as a shared library (.dll/.so)
+  HAL Options
+    ATCA_HAL_KIT_HID (default off) - Include the HID HAL Driver
+    ATCA_HAL_I2C (default off) - Include the I2C Hal Driver - Linux & MCU only
+    ATCA_HAL_SPI (default off) - Include the SPI HAL Driver - Linux & MCU only
+    ATCA_HAL_CUSTOM (default off) - Support for Custom/Plug-in Hal Driver
+  External Crypto Library
+    ATCA_MBEDTLS (default off) - Integrate with mbedtls
+    ATCA_WOLFSSL (default off) - Integrate with WolfSSL
+    ATCA_OPENSSL (default off) - Integration with OpenSSL
+  PKCS11 Options
+    ATCA_PKCS11 (default off) - Build the library as a PKCS#11 Provider
+  Trust & Go Options
+    ATCA_TNGTLS_SUPPORT (default off) - Include Trust & Go TLS Certificates
+    ATCA_TNGLORA_SUPPORT (default off) - Include Trust & Go LORA Certificates
+    ATCA_TFLEX_SUPPORT (default off) - Include Trust Flex Certificates
+    ATCA_TNG_LEGACY_SUPPORT (default off) - Include previous version of Trust & Go Certificates
+  Device Selection Options
+    ATCA_ATSHA204A_SUPPORT (default on) - Include support for ATSHA204A device
+    ATCA_ATECC508A_SUPPORT (default on) - Include support for ATECC508A device
+    ATCA_ATECC608A_SUPPORT (default on) - Include support for ATECC608A device
+    ATCA_TA100_SUPPORT (default off) - Include support for TA100 device
+  TA Specific Options
+    ATCA_TA100_AES_AUTH_SUPPORT - Include Encrypted (GCM) and CMAC Auth session support
+
+
+
+https://github.com/MicrochipTech/cryptoauthlib/wiki/Greengrass-HSI
+ Initializing the device using python
+  install pkcs11 lib build: 
+    $ pip install cryptoauthlib
+  clone the tools: 
+    $ git clone https://github.com/MicrochipTech/cryptoauthtools.git
+  Probing with cryptoauthtools: 
+    $ python cryptoauthtools/python/examples/info.py -i i2c
+  Configure a different I2C address that is AWS zero touch kit compatible: 
+    $ python cryptoauthtools/python/examples/config.py -i i2c
+
+
+
+(penv36) ~/cryptoauthlib-20200208$ pip uninstall cryptoauthlib
+Found existing installation: cryptoauthlib 20200208
+Uninstalling cryptoauthlib-20200208:
+  Would remove:
+    /home/altera/penv36/lib/python3.6/site-packages/cryptoauthlib-20200208-py3.6.egg-info
+    /home/altera/penv36/lib/python3.6/site-packages/cryptoauthlib/*
+  Would not remove (might be manually added):
+    /home/altera/penv36/lib/python3.6/site-packages/cryptoauthlib/libcryptoauth.so
+Proceed (y/n)? y
+  Successfully uninstalled cryptoauthlib-20200208
+
+
+
+(penv36) ~/cryptoauthlib-20200208$ python setup.py -vvv install
+
+
+
+(penv36) ~/cryptoauthlib-20200208$ python setup.py -vvv build_ext
+running build_ext
+CMAKE: ['cmake', '/home/altera/cryptoauthlib-20200208/lib', 
+        '-DATCA_HAL_CUSTOM=ON', 
+        '-DATCA_HAL_KIT_HID=ON', 
+        '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/home/altera/cryptoauthlib-20200208/build/lib.linux-x86_64-3.6/cryptoauthlib', 
+        '-DATCA_HAL_I2C=ON', 
+        '-DATCACERT_DEF_SRC=/home/altera/cryptoauthlib-20200208/atca_utils_sizes.c']  .... cwd /home/altera/cryptoauthlib-20200208/build/temp.linux-x86_64-3.6
+CMAKE: ['cmake', '--build', '.']  .... cwd /home/altera/cryptoauthlib-20200208/build/temp.linux-x86_64-3.6
+(penv36) ~/cryptoauthlib-20200208$ cd lib
+(penv36) ~/cryptoauthlib-20200208/lib$ ls -l
+-rw-r--r-- 1 altera altera  1586 Mar 17  2020 atca_bool.h
+drwxr-xr-x 2 altera altera  4096 Mar 17  2020 atcacert
+-rw-r--r-- 1 altera altera  5540 Mar 17  2020 atca_cfgs.c
+-rw-r--r-- 1 altera altera  2529 Mar 17  2020 atca_cfgs.h
+-rw-r--r-- 1 altera altera 22389 Mar 17  2020 atca_command.c
+-rw-r--r-- 1 altera altera 54596 Mar 17  2020 atca_command.h
+-rw-r--r-- 1 altera altera  6393 Mar 17  2020 atca_compiler.h
+-rw-r--r-- 1 altera altera   954 Mar 17  2020 atca_config.h.in
+-rw-r--r-- 1 altera altera  4872 Mar 17  2020 atca_device.c
+-rw-r--r-- 1 altera altera  2130 Mar 17  2020 atca_device.h
+-rw-r--r-- 1 altera altera  1672 Mar 17  2020 atca_devtypes.h
+-rw-r--r-- 1 altera altera 11950 Mar 17  2020 atca_execution.c
+-rw-r--r-- 1 altera altera  2258 Mar 17  2020 atca_execution.h
+-rw-r--r-- 1 altera altera  8254 Mar 17  2020 atca_iface.c
+-rw-r--r-- 1 altera altera  6700 Mar 17  2020 atca_iface.h
+-rw-r--r-- 1 altera altera  5138 Mar 17  2020 atca_status.h
+-rw-r--r-- 1 altera altera  1545 Mar 17  2020 atca_version.h
+drwxr-xr-x 2 altera altera  4096 Mar 17  2020 basic
+-rw-r--r-- 1 altera altera  4444 Mar 17  2020 CMakeLists.txt
+drwxr-xr-x 3 altera altera  4096 Mar 17  2020 crypto
+-rw-r--r-- 1 altera altera  2943 Mar 17  2020 cryptoauthlib.h
+drwxr-xr-x 2 altera altera  4096 Mar 17  2020 hal
+drwxr-xr-x 2 altera altera  4096 Mar 17  2020 host
+drwxr-xr-x 2 altera altera  4096 Mar 17  2020 jwt
+drwxr-xr-x 2 altera altera  4096 Mar 17  2020 mbedtls
+(penv36) ~/cryptoauthlib-20200208/lib$ grep ATCA_HAL_ hal/*
+hal/atca_hal.c:        #ifdef ATCA_HAL_I2C
+hal/atca_hal.c:        #ifdef ATCA_HAL_SWI
+hal/atca_hal.c:        #ifdef ATCA_HAL_UART
+hal/atca_hal.c:        #ifdef ATCA_HAL_KIT_CDC
+hal/atca_hal.c:        #ifdef ATCA_HAL_SPI
+hal/atca_hal.c:        #ifdef ATCA_HAL_KIT_HID
+hal/atca_hal.c:        #ifdef ATCA_HAL_CUSTOM
+hal/atca_hal.c:#ifdef ATCA_HAL_I2C
+hal/atca_hal.c: #ifdef ATCA_HAL_SWI
+hal/atca_hal.c: #ifdef ATCA_HAL_UART
+hal/atca_hal.c:#ifdef ATCA_HAL_KIT_CDC
+hal/atca_hal.c:#ifdef ATCA_HAL_SPI
+hal/atca_hal.c:#ifdef ATCA_HAL_KIT_HID
+hal/atca_hal.c:#ifdef ATCA_HAL_CUSTOM
+hal/atca_hal.h:#ifndef ATCA_HAL_H_
+hal/atca_hal.h:#define ATCA_HAL_H_
+hal/atca_hal.h:// bridge, add both ATCA_HAL_I2C and ATCA_HAL_SWI defines to your compiler settings and then
+hal/atca_hal.h://#define ATCA_HAL_I2C
+hal/atca_hal.h://#define ATCA_HAL_SWI
+hal/atca_hal.h://#define ATCA_HAL_SPI
+hal/atca_hal.h://#define ATCA_HAL_UART
+hal/atca_hal.h://#define ATCA_HAL_KIT_HID
+hal/atca_hal.h://#define ATCA_HAL_KIT_CDC
+hal/atca_hal.h:#ifdef ATCA_HAL_I2C
+hal/atca_hal.h:#ifdef ATCA_HAL_SWI
+hal/atca_hal.h:#ifdef ATCA_HAL_UART
+hal/atca_hal.h:#ifdef ATCA_HAL_KIT_CDC
+hal/atca_hal.h:#ifdef ATCA_HAL_KIT_HID
+hal/atca_hal.h:#endif /* ATCA_HAL_H_ */
+hal/kit_phy.h:#endif /* ATCA_HAL_PHY_H_ */
+
+
+
+(penv36) ~/cryptoauthlib-20200208$ grep '\.so' cryptoauthlib/*
+cryptoauthlib/library.py:        elif os.path.exists(os.path.join(curr_path, "libcryptoauth.so")):
+cryptoauthlib/library.py:            _CRYPTO_LIB = ctypes.cdll.LoadLibrary(os.path.join(curr_path, "libcryptoauth.so"))
+cryptoauthlib/library.py:                _CRYPTO_LIB = ctypes.cdll.LoadLibrary('libcryptoauth.so')
+
+
+
+examples:
+
+  modify to print which .so is loaded, and which hal_i2c_ is called: 
+    (penv36) ~/cryptoauthlib-20200208$ 
+    vi cryptoauthlib/library.py
+    vi lib/hal/hal_linux_i2c_userspace.c
+
+  build and install
+    (penv36) ~/cryptoauthlib-20200208$ 
+    python setup.py -vvv install
+
+    (penv36) ~/cryptoauthtools/python/examples$ 
+    python info.py -i i2c
+
+  captured i2c operations and converted to buspirate command below. 
+  captured buspirate on the tflex model at address 0x6c (0x36) and 0x6d:
+
+    I2C>0x00 %:2 [ 0x6c [ 0x6c 0x03 0x07 0x02 0x80 0x0 0x0 0x9 0xad ] [0x6d r] [0x6d r:0x22]
+    WRITE: 0x00 NACK
+    DELAY 2ms
+    I2C START BIT
+    WRITE: 0x6C ACK
+    I2C START BIT
+    WRITE: 0x6C ACK
+    WRITE: 0x03 ACK
+    WRITE: 0x07 ACK
+    WRITE: 0x02 ACK
+    WRITE: 0x80 ACK
+    WRITE: 0x00 ACK
+    WRITE: 0x00 ACK
+    WRITE: 0x09 ACK
+    WRITE: 0xAD ACK
+    I2C STOP BIT
+    I2C START BIT
+    WRITE: 0x6D ACK
+    READ: 0x23
+    NACK
+    I2C STOP BIT
+    I2C START BIT
+    WRITE: 0x6D ACK
+    READ: 0x01  ACK 0x23  ACK 0x0E  ACK 0x13  ACK 0x00  ACK 0x00  ACK 0x60  ACK 0x02  ACK 0x6E  ACK 0xAD  ACK 0x68  ACK 0x16  ACK 0x01  ACK 0x01  ACK 0x55  ACK 0x00  ACK 0x6C  ACK 0x00  ACK 0x00  ACK 0x01  ACK 0x85  ACK 0x00  ACK 0x82  ACK 0x00  ACK 0x85  ACK 0x20  ACK 0x85  ACK 0x20  ACK 0x85  ACK 0x20  ACK 0x8F  ACK 0x46  ACK 0x9B  ACK 0x8A
+    NACK
+    I2C STOP BIT
+
+
