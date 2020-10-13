@@ -16,3 +16,48 @@ LH instruction causes MISALIGNED HALFWORD error
   disable CATCH_MISALIGN
 
 
+search picorv32 exception
+
+https://hackaday.io/project/57660/logs
+  rtl:
+    reg mem_valid_last;
+    always @(posedge clk_rv) begin
+        if (!rst_rv)
+            cpu_irq <= 1'b0;
+        else begin
+            mem_valid_last <= mem_valid;
+            if (mem_valid && !mem_valid_last && !(ram_valid || vram_valid || gpio_valid || usb_valid || uart_valid || ddr_valid))
+                cpu_irq <= 1'b1;
+            else
+                cpu_irq <= 1'b0;
+        end
+    end
+
+  firmware:
+    irq:
+    # copy the source PC (inside gp register) to argument 0 (a0 register)
+    addi a0, gp, 0
+    # call handler
+    call hard_fault_handler
+
+  c:
+    void hard_fault_handler(uint32_t pc) {
+        // External logic is required to connect fault signal to IRQ line,
+        // and ENABLE_IRQ_QREGS should be turned off.
+        term_print("HARD FAULT PC = ");
+        term_print_hex(pc, 8);
+        while (1);
+    }
+
+  enable irq:
+    // Set interrupt mask to zero (enable all interrupts)
+    // This is a PicoRV32 custom instruction
+     asm(".word 0x0600000b");
+
+
+search pano logic g1
+
+https://hackaday.io/project/136227-pano-logic-zero-client-g1
+https://tomverbeure.github.io/risc-v/2018/11/19/A-Bug-Free-RISC-V-Core-without-Simulation.html
+
+
